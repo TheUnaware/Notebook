@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ShapeAppearance.Notebook.TextField" parent="ShapeAppearance.Material3.Corner.Medium">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="Widget.Notebook.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/textfield_stroke_color</item>
+        <item name="hintTextColor">@color/notebook_ink</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Notebook.TextField</item>
+        <item name="boxStrokeWidth">1.5dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+    </style>
+
+    <style name="Widget.Notebook.Button" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/notebook_ink</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.Notebook.Headline" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:fontFamily">@font/caveat_bold</item>
+        <item name="fontFamily">@font/caveat_bold</item>
+        <item name="android:textColor">@color/notebook_ink</item>
+        <item name="android:textSize">36sp</item>
+    </style>
+
+    <style name="TextAppearance.Notebook.Subtitle" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">@font/caveat</item>
+        <item name="fontFamily">@font/caveat</item>
+        <item name="android:textColor">@color/notebook_ink_soft</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextAppearance.Notebook.Link" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textColor">@color/notebook_maroon</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Notebook.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>

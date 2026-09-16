@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.notebook.ui.auth.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/registerFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.notebook.ui.auth.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register">
+
+        <action
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/loginFragment" />
+
+        <action
+            android:id="@+id/action_registerFragment_to_profileSetupFragment"
+            app:destination="@id/profileSetupFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileSetupFragment"
+        android:name="com.example.notebook.ProfileSetupFragment"
+        android:label="Profile Setup"
+        tools:layout="@layout/fragment_profile_setup">
+
+        <action
+            android:id="@+id/action_profileSetupFragment_to_notesFeedFragment"
+            app:destination="@id/notesFeedFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/notesFeedFragment"
+        android:name="com.example.notebook.NotesFeedFragment"
+        android:label="Notes Feed"
+        tools:layout="@layout/fragment_notes_feed" />
+</navigation>

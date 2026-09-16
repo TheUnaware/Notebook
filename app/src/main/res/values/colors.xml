@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="notebook_cream">#FDF6ED</color>
+    <color name="notebook_cream_dark">#F2E4CE</color>
+    <color name="notebook_ink">#3C4A6B</color>
+    <color name="notebook_coral">#E4785A</color>
+    <color name="notebook_maroon">#A64153</color>
+    <color name="notebook_line">#E4D6B8</color>
+    <color name="notebook_white">#FFFFFF</color>
+    <color name="notebook_ink_soft">#7A84A0</color>
 </resources>
