@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_login_to_profileSetup"
             app:destination="@id/profileSetupFragment" />
+        <action
+            android:id="@+id/action_login_to_notesFeed"
+            app:destination="@id/notesFeedFragment" />
 
     </fragment>
 
@@ -38,7 +41,7 @@
 
     <fragment
         android:id="@+id/profileSetupFragment"
-        android:name="com.example.notebook.ProfileSetupFragment"
+        android:name="com.example.notebook.ui.auth.ProfileSetupFragment"
         android:label="Profile Setup"
         tools:layout="@layout/fragment_profile_setup">
 
@@ -47,9 +50,43 @@
             app:destination="@id/notesFeedFragment" />
 
     </fragment>
+
     <fragment
         android:id="@+id/notesFeedFragment"
-        android:name="com.example.notebook.NotesFeedFragment"
+        android:name="com.example.notebook.ui.auth.NotesFeedFragment"
         android:label="Notes Feed"
         tools:layout="@layout/fragment_notes_feed" />
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.notebook.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/createNoteFragment"
+        android:name="com.example.notebook.CreateNoteFragment"
+        android:label="Create Note"
+        tools:layout="@layout/fragment_create_note" />
+
+    <fragment
+        android:id="@+id/anonymousFragment"
+        android:name="com.example.notebook.AnonymousFragment"
+        android:label="Anonymous"
+        tools:layout="@layout/fragment_anonymous" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.notebook.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_profile_to_login"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
 </navigation>

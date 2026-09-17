@@ -10,4 +10,8 @@
     <color name="notebook_line">#E4D6B8</color>
     <color name="notebook_white">#FFFFFF</color>
     <color name="notebook_ink_soft">#7A84A0</color>
+    <color name="notebook_style_classic">#FDF6ED</color>
+    <color name="notebook_style_grid">#EAF1F8</color>
+    <color name="notebook_style_kraft">#E8D9C0</color>
+    <color name="notebook_style_dotted">#F3E9F7</color>
 </resources>

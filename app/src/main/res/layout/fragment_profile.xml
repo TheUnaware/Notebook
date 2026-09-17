@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/notebook_cream"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <!-- Cover page -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_cover"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="4dp"
+            app:strokeColor="@color/notebook_line"
+            app:strokeWidth="1dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <!-- Username + overflow menu -->
+
+                <TextView
+                    android:id="@+id/text_username"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Notebook.Subtitle"
+                    android:textColor="@color/notebook_ink"
+                    android:textSize="20sp"
+                    tools:text="@alexwrites"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/button_more"
+                    app:layout_constraintBottom_toBottomOf="@id/button_more" />
+
+                <ImageView
+                    android:id="@+id/button_more"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_more_vert"
+                    app:tint="@color/notebook_ink"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="Profile options" />
+
+                <!-- Identity card -->
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_identity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/notebook_white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/notebook_line"
+                    app:strokeWidth="1dp"
+                    app:layout_constraintTop_toBottomOf="@id/text_username"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/image_avatar"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:background="@color/notebook_cream_dark"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_avatar_placeholder"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Notebook.Circle"
+                            app:strokeColor="@color/notebook_ink"
+                            app:strokeWidth="1.5dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/text_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:textColor="@color/notebook_ink"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            tools:text="Alex Rivera"
+                            app:layout_constraintTop_toTopOf="@id/image_avatar"
+                            app:layout_constraintStart_toEndOf="@id/image_avatar"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <TextView
+                            android:id="@+id/text_pronouns"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/notebook_ink_soft"
+                            android:textSize="13sp"
+                            tools:text="She/her"
+                            app:layout_constraintTop_toBottomOf="@id/text_name"
+                            app:layout_constraintStart_toEndOf="@id/image_avatar"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <TextView
+                            android:id="@+id/text_bio"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_marginTop="4dp"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textColor="@color/notebook_ink_soft"
+                            android:textSize="13sp"
+                            tools:text="Writing little things about everyday life ✎"
+                            app:layout_constraintTop_toBottomOf="@id/text_pronouns"
+                            app:layout_constraintStart_toEndOf="@id/image_avatar"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@id/image_avatar" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Uploaded notes section -->
+
+                <TextView
+                    android:id="@+id/text_notes_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Uploaded Notes"
+                    android:textAppearance="@style/TextAppearance.Notebook.Subtitle"
+                    android:textColor="@color/notebook_ink"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/card_identity"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_notes"
+                    android:layout_width="0dp"
+                    android:layout_height="220dp"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="@color/notebook_white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/notebook_line"
+                    app:strokeWidth="1dp"
+                    app:layout_constraintTop_toBottomOf="@id/text_notes_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <TextView
+                        android:id="@+id/text_notes_placeholder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="No notes uploaded by user"
+                        android:textColor="@color/notebook_ink_soft"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

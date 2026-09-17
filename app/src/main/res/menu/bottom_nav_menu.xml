@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/notesFeedFragment"
+        android:icon="@drawable/ic_nav_home"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_nav_search"
+        android:title="Search" />
+
+    <item
+        android:id="@+id/createNoteFragment"
+        android:icon="@drawable/ic_nav_create"
+        android:title="" />
+
+    <item
+        android:id="@+id/anonymousFragment"
+        android:icon="@drawable/ic_nav_anonymous"
+        android:title="Anonymous" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_nav_profile"
+        android:title="Profile" />
+
+</menu>

@@ -1,4 +1,4 @@
-package com.example.notebook
+package com.example.notebook.ui.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater

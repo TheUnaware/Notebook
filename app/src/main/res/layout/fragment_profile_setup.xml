@@ -30,8 +30,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="A little cover page before you start writing."
+            android:text="✎ A little cover page before you start writing"
             android:textAppearance="@style/TextAppearance.Notebook.Subtitle"
+            android:textColor="@color/notebook_maroon"
             app:layout_constraintTop_toBottomOf="@id/text_headline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -100,7 +101,7 @@
             android:id="@+id/card_form"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="26dp"
             app:cardBackgroundColor="@color/notebook_white"
             app:cardCornerRadius="24dp"
             app:cardElevation="3dp"
@@ -129,7 +130,8 @@
                         android:id="@+id/input_display_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:textAppearance="@style/TextAppearance.Notebook.Input" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -140,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:hint="Username"
-                    app:prefixText="@"
+                    app:prefixText="/@"
                     app:prefixTextColor="@color/notebook_ink_soft"
                     app:layout_constraintTop_toBottomOf="@id/layout_display_name"
                     app:layout_constraintStart_toStartOf="parent"
@@ -150,7 +152,73 @@
                         android:id="@+id/input_username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:textAppearance="@style/TextAppearance.Notebook.Input" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_dob"
+                    style="@style/Widget.Notebook.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:hint="Date of birth"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@drawable/ic_calendar"
+                    app:endIconTint="@color/notebook_ink_soft"
+                    app:layout_constraintTop_toBottomOf="@id/layout_username"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_dob"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:cursorVisible="false"
+                        android:inputType="none"
+                        android:textAppearance="@style/TextAppearance.Notebook.Input" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_pronouns"
+                    style="@style/Widget.Notebook.TextInputLayout.ExposedDropdown"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:hint="Pronouns (optional)"
+                    app:layout_constraintTop_toBottomOf="@id/layout_dob"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/input_pronouns"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:textAppearance="@style/TextAppearance.Notebook.Input" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_location"
+                    style="@style/Widget.Notebook.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:hint="Location (optional)"
+                    app:layout_constraintTop_toBottomOf="@id/layout_pronouns"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPostalAddress"
+                        android:textAppearance="@style/TextAppearance.Notebook.Input" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -163,7 +231,7 @@
                     android:hint="A short note about you"
                     app:counterEnabled="true"
                     app:counterMaxLength="120"
-                    app:layout_constraintTop_toBottomOf="@id/layout_username"
+                    app:layout_constraintTop_toBottomOf="@id/layout_location"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
@@ -174,7 +242,8 @@
                         android:gravity="top|start"
                         android:inputType="textMultiLine"
                         android:maxLength="120"
-                        android:minLines="3" />
+                        android:minLines="3"
+                        android:textAppearance="@style/TextAppearance.Notebook.Input" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -195,6 +264,20 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
+        <!-- Washi tape accent, matches register page -->
+        <View
+            android:id="@+id/view_tape_accent"
+            android:layout_width="68dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="-12dp"
+            android:alpha="0.88"
+            android:background="@drawable/shape_rounded_tape"
+            android:backgroundTint="@color/notebook_coral"
+            android:rotation="-5"
+            app:layout_constraintStart_toStartOf="@id/card_form"
+            app:layout_constraintTop_toTopOf="@id/card_form" />
 
         <!-- Privacy card -->
 
@@ -264,21 +347,32 @@
             android:layout_marginTop="22dp"
             android:text="Pick a page style"
             android:textAppearance="@style/TextAppearance.Notebook.Subtitle"
+            android:textColor="@color/notebook_ink"
             android:textSize="18sp"
             app:layout_constraintTop_toBottomOf="@id/card_privacy"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/text_style_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This is how your profile pages will look to others"
+            android:textColor="@color/notebook_ink_soft"
+            android:textSize="13sp"
+            app:layout_constraintTop_toBottomOf="@id/text_style_label"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_notebook_styles"
             android:layout_width="0dp"
-            android:layout_height="96dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="104dp"
+            android:layout_marginTop="12dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/text_style_label"
+            app:layout_constraintTop_toBottomOf="@id/text_style_hint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:listitem="@layout/item_notebook_style_swatch" />
@@ -292,6 +386,10 @@
             android:layout_height="52dp"
             android:layout_marginTop="28dp"
             android:text="Start writing"
+            app:icon="@drawable/ic_pencil"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/notebook_white"
             app:layout_constraintTop_toBottomOf="@id/recycler_notebook_styles"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
