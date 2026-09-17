@@ -46,4 +46,11 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="TextAppearance.Notebook.Input" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">@font/caveat</item>
+        <item name="fontFamily">@font/caveat</item>
+        <item name="android:textColor">@color/notebook_ink</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>

@@ -9,11 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.notebook.R
 import com.example.notebook.databinding.FragmentRegisterBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.example.notebook.util.FirebaseUtil
 
 class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +31,8 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
 
         binding.buttonRegister.setOnClickListener {
             val name = binding.inputName.text.toString().trim()
@@ -40,14 +47,50 @@ class RegisterFragment : Fragment() {
                 password != confirm -> showError("Passwords don't match")
                 else -> {
                     binding.textError.visibility = View.GONE
-                    // Firebase account creation goes here in the auth phase
+                    registerUser(name, email, password)
                 }
             }
         }
 
         binding.textGoLogin.setOnClickListener {
-            findNavController().navigate(R.id.action_registerFragment_to_profileSetupFragment)
+            findNavController().navigate(R.id.action_register_to_login)
         }
+    }
+
+    private fun registerUser(name: String, email: String, password: String) {
+        binding.buttonRegister.isEnabled = false
+
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener { result ->
+                val uid = result.user?.uid
+                if (uid == null) {
+                    binding.buttonRegister.isEnabled = true
+                    showError("Something went wrong. Try again.")
+                    return@addOnSuccessListener
+                }
+
+                val userMap = mapOf(
+                    "uid" to uid,
+                    "name" to name,
+                    "email" to email,
+                    "profileComplete" to false,
+                    "createdAt" to System.currentTimeMillis()
+                )
+
+                FirebaseUtil.database.getReference("users").child(uid).setValue(userMap)
+                    .addOnSuccessListener {
+                        binding.buttonRegister.isEnabled = true
+                        findNavController().navigate(R.id.action_register_to_login)
+                    }
+                    .addOnFailureListener { e ->
+                        binding.buttonRegister.isEnabled = true
+                        showError("Account created, but profile save failed: ${e.message}")
+                    }
+            }
+            .addOnFailureListener { e ->
+                binding.buttonRegister.isEnabled = true
+                showError(e.message ?: "Registration failed")
+            }
     }
 
     private fun showError(message: String) {
