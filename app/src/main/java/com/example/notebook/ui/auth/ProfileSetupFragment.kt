@@ -51,13 +51,13 @@ class ProfileSetupFragment : Fragment() {
 
     private fun setupStylePicker() {
         val styles = listOf(
-            NotebookStyleOption(id = "classic", label = "Classic", previewIconRes = R.drawable.ic_pencil),
-            NotebookStyleOption(id = "grid", label = "Grid", previewIconRes = R.drawable.ic_pencil),
-            NotebookStyleOption(id = "kraft", label = "Kraft", previewIconRes = R.drawable.ic_pencil),
-            NotebookStyleOption(id = "dotted", label = "Dotted", previewIconRes = R.drawable.ic_pencil)
+            NotebookStyleOption(id = "classic", label = "Classic", previewIconRes = R.drawable.ic_pattern_classic),
+            NotebookStyleOption(id = "grid", label = "Grid", previewIconRes = R.drawable.ic_pattern_grid),
+            NotebookStyleOption(id = "kraft", label = "Kraft", previewIconRes = R.drawable.ic_pattern_kraft),
+            NotebookStyleOption(id = "dotted", label = "Dotted", previewIconRes = R.drawable.ic_pattern_dotted)
         )
 
-        styleAdapter = NotebookStyleAdapter(styles) { selected ->
+        styleAdapter = NotebookStyleAdapter(styles, initialSelectedId = selectedStyleId) { selected ->
             selectedStyleId = selected.id
         }
 

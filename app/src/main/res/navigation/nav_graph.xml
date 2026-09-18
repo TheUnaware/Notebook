@@ -61,7 +61,13 @@
         android:id="@+id/searchFragment"
         android:name="com.example.notebook.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+
+        <action
+            android:id="@+id/action_search_to_profile"
+            app:destination="@id/profileFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/createNoteFragment"
@@ -80,6 +86,12 @@
         android:name="com.example.notebook.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile">
+
+        <argument
+            android:name="uid"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
 
         <action
             android:id="@+id/action_profile_to_login"

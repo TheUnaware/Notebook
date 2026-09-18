@@ -14,4 +14,12 @@
     <color name="notebook_style_grid">#EAF1F8</color>
     <color name="notebook_style_kraft">#E8D9C0</color>
     <color name="notebook_style_dotted">#F3E9F7</color>
+
+    <!-- Cover color swatch options -->
+    <color name="swatch_cream">#FDF6ED</color>
+    <color name="swatch_blue">#EAF1F8</color>
+    <color name="swatch_kraft">#E8D9C0</color>
+    <color name="swatch_lavender">#F3E9F7</color>
+    <color name="swatch_coral">#FBE3DB</color>
+    <color name="swatch_sage">#E4EDE4</color>
 </resources>

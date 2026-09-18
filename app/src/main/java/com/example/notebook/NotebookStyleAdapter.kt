@@ -5,28 +5,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notebook.databinding.ItemNotebookStyleSwatchBinding
 
-/**
- * One notebook style option shown in the picker — a name plus an icon/drawable
- * used as its preview.
- */
 data class NotebookStyleOption(
     val id: String,
     val label: String,
     val previewIconRes: Int
 )
 
-/**
- * Adapter for the horizontal "Pick a page style" RecyclerView on the
- * profile setup screen. Renders one item_notebook_style_swatch.xml card
- * per style, highlights the selected one, and reports taps back via
- * onStyleSelected.
- */
 class NotebookStyleAdapter(
     private val styles: List<NotebookStyleOption>,
+    initialSelectedId: String? = null,
     private val onStyleSelected: (NotebookStyleOption) -> Unit
 ) : RecyclerView.Adapter<NotebookStyleAdapter.StyleViewHolder>() {
 
-    private var selectedPosition = 0
+    private var selectedPosition: Int =
+        styles.indexOfFirst { it.id == initialSelectedId }.let { if (it >= 0) it else 0 }
 
     inner class StyleViewHolder(val binding: ItemNotebookStyleSwatchBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -64,6 +56,5 @@ class NotebookStyleAdapter(
 
     override fun getItemCount(): Int = styles.size
 
-    /** Which style is currently highlighted, if you need it from outside. */
     fun getSelectedStyle(): NotebookStyleOption = styles[selectedPosition]
 }

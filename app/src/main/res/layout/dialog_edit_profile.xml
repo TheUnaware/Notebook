@@ -1,30 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="24dp">
 
         <TextView
+            android:id="@+id/text_dialog_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Edit Profile"
             android:textColor="@color/notebook_ink"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Avatar picker -->
+
+        <FrameLayout
+            android:id="@+id/frame_edit_avatar"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginTop="18dp"
+            app:layout_constraintTop_toBottomOf="@id/text_dialog_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_edit_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/notebook_cream_dark"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_avatar_placeholder"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Notebook.Circle"
+                app:strokeColor="@color/notebook_ink"
+                app:strokeWidth="1.5dp"
+                tools:ignore="ContentDescription" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom|end"
+                app:cardBackgroundColor="@color/notebook_ink"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/notebook_white"
+                app:strokeWidth="2dp">
+
+                <ImageView
+                    android:id="@+id/button_change_avatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_pencil"
+                    app:tint="@color/notebook_white"
+                    tools:ignore="ContentDescription" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </FrameLayout>
+
+        <!-- Form fields -->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_edit_name"
             style="@style/Widget.Notebook.TextInputLayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:hint="Display name">
+            android:layout_marginTop="20dp"
+            android:hint="Display name"
+            app:layout_constraintTop_toBottomOf="@id/frame_edit_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_edit_name"
@@ -37,11 +91,14 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_edit_username"
             style="@style/Widget.Notebook.TextInputLayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:hint="Username"
-            app:prefixText="\@">
+            app:prefixText="\@"
+            app:layout_constraintTop_toBottomOf="@id/layout_edit_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_edit_username"
@@ -54,10 +111,13 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_edit_pronouns"
             style="@style/Widget.Notebook.TextInputLayout.ExposedDropdown"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:hint="Pronouns">
+            android:hint="Pronouns"
+            app:layout_constraintTop_toBottomOf="@id/layout_edit_username"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <AutoCompleteTextView
                 android:id="@+id/input_edit_pronouns"
@@ -70,12 +130,15 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_edit_bio"
             style="@style/Widget.Notebook.TextInputLayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:hint="Bio"
             app:counterEnabled="true"
-            app:counterMaxLength="120">
+            app:counterMaxLength="120"
+            app:layout_constraintTop_toBottomOf="@id/layout_edit_pronouns"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_edit_bio"
@@ -88,23 +151,92 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Cover style -->
+
+        <TextView
+            android:id="@+id/text_style_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Cover style"
+            android:textColor="@color/notebook_ink"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/layout_edit_bio"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_edit_notebook_styles"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="10dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/text_style_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/item_notebook_style_swatch" />
+
+        <!-- Cover color -->
+
+        <TextView
+            android:id="@+id/text_color_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Cover color"
+            android:textColor="@color/notebook_ink"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/recycler_edit_notebook_styles"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <HorizontalScrollView
+            android:id="@+id/scroll_color_swatches"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:scrollbars="none"
+            app:layout_constraintTop_toBottomOf="@id/text_color_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:id="@+id/container_color_swatches"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical" />
+
+        </HorizontalScrollView>
+
         <TextView
             android:id="@+id/text_edit_error"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="16dp"
             android:textColor="@color/notebook_maroon"
             android:textSize="13sp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:text="That username is already taken"
+            tools:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/scroll_color_swatches"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_save_profile"
             style="@style/Widget.Notebook.Button"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_marginTop="18dp"
-            android:text="Save Changes" />
+            android:layout_marginBottom="4dp"
+            android:text="Save Changes"
+            app:layout_constraintTop_toBottomOf="@id/text_edit_error"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

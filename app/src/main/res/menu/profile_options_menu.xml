@@ -4,6 +4,9 @@
         android:id="@+id/action_edit_profile"
         android:title="Edit Profile" />
     <item
+        android:id="@+id/action_follow_requests"
+        android:title="Follow Requests" />
+    <item
         android:id="@+id/action_logout"
         android:title="Log Out" />
 </menu>
