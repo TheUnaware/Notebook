@@ -1,19 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/notebook_cream"
-    android:padding="28dp">
+    android:background="@color/notebook_cream">
 
     <TextView
-        android:id="@+id/text_placeholder"
+        android:id="@+id/text_feed_headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your notebook is empty for now."
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="52dp"
+        android:text="Notebook"
         android:textAppearance="@style/TextAppearance.Notebook.Headline"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_stories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:clipToPadding="false"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/text_feed_headline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_story_avatar" />
+
+    <View
+        android:id="@+id/divider_stories"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/notebook_line"
+        app:layout_constraintTop_toBottomOf="@id/recycler_stories"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_home_feed"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="14dp"
+        android:clipToPadding="false"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/divider_stories"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/item_note_feed_card" />
+
+    <TextView
+        android:id="@+id/text_feed_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Follow people to see their notes here"
+        android:textColor="@color/notebook_ink_soft"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/recycler_home_feed"
+        app:layout_constraintBottom_toBottomOf="@id/recycler_home_feed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

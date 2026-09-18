@@ -195,7 +195,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/card_notes"
                         android:layout_width="0dp"
-                        android:layout_height="220dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         app:cardBackgroundColor="@color/notebook_white"
                         app:cardCornerRadius="20dp"
@@ -206,14 +206,34 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent">
 
-                        <TextView
-                            android:id="@+id/text_notes_placeholder"
-                            android:layout_width="wrap_content"
+                        <FrameLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="No notes uploaded by user"
-                            android:textColor="@color/notebook_ink_soft"
-                            android:textSize="14sp" />
+                            android:minHeight="220dp">
+
+                            <TextView
+                                android:id="@+id/text_notes_placeholder"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="No notes uploaded by user"
+                                android:textColor="@color/notebook_ink_soft"
+                                android:textSize="14sp" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycler_notes"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="top"
+                                android:clipToPadding="false"
+                                android:padding="6dp"
+                                android:visibility="gone"
+                                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                                app:spanCount="3"
+                                tools:listitem="@layout/item_note_grid_cell"
+                                tools:visibility="visible" />
+
+                        </FrameLayout>
 
                     </com.google.android.material.card.MaterialCardView>
 

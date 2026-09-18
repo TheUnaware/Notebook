@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="14dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="3dp"
+    app:strokeColor="@color/notebook_line"
+    app:strokeWidth="1dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_card_pattern"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.4"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_pattern_classic"
+            app:tint="@color/notebook_line"
+            android:contentDescription="Note style" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="18dp">
+
+            <!-- Anonymous badge row (no avatar, no username, no uid anywhere) -->
+
+            <ImageView
+                android:id="@+id/image_anon_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_nav_anonymous"
+                app:tint="@color/notebook_ink_soft"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:contentDescription="Anonymous" />
+
+            <TextView
+                android:id="@+id/text_card_anon_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Anonymous"
+                android:textColor="@color/notebook_ink_soft"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="@id/image_anon_icon"
+                app:layout_constraintBottom_toBottomOf="@id/image_anon_icon"
+                app:layout_constraintStart_toEndOf="@id/image_anon_icon"
+                app:layout_constraintEnd_toStartOf="@id/text_card_date" />
+
+            <TextView
+                android:id="@+id/text_card_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/notebook_ink_soft"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                tools:text="18 Sep"
+                app:layout_constraintTop_toTopOf="@id/image_anon_icon"
+                app:layout_constraintBottom_toBottomOf="@id/image_anon_icon"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Note content -->
+
+            <TextView
+                android:id="@+id/text_card_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ellipsize="end"
+                android:maxLines="6"
+                android:lineSpacingExtra="6dp"
+                android:textColor="@color/notebook_ink"
+                android:textSize="15sp"
+                tools:text="Something I've never told anyone..."
+                app:layout_constraintTop_toBottomOf="@id/image_anon_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+</com.google.android.material.card.MaterialCardView>

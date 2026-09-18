@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notebook.databinding.FragmentSearchBinding
 import com.example.notebook.util.FirebaseUtil
@@ -26,10 +25,12 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var resultsAdapter: UserSearchAdapter
-    private lateinit var exploreAdapter: ExplorePlaceholderAdapter
+    private lateinit var feedAdapter: NoteFeedAdapter
 
     private val searchHandler = Handler(Looper.getMainLooper())
     private var searchRunnable: Runnable? = null
+
+    private var exploreLoaded = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,9 +51,11 @@ class SearchFragment : Fragment() {
         binding.recyclerUserResults.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerUserResults.adapter = resultsAdapter
 
-        exploreAdapter = ExplorePlaceholderAdapter()
-        binding.recyclerExploreGrid.layoutManager = GridLayoutManager(requireContext(), 3)
-        binding.recyclerExploreGrid.adapter = exploreAdapter
+        feedAdapter = NoteFeedAdapter { note -> openNoteDetail(note) }
+        binding.recyclerExploreGrid.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerExploreGrid.adapter = feedAdapter
+
+        loadExploreFeed()
 
         binding.inputSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -80,6 +83,11 @@ class SearchFragment : Fragment() {
         findNavController().navigate(R.id.action_search_to_profile, bundle)
     }
 
+    private fun openNoteDetail(note: Note) {
+        val bundle = Bundle().apply { putString("noteId", note.id) }
+        findNavController().navigate(R.id.action_search_to_noteDetail, bundle)
+    }
+
     private fun showExploreView() {
         binding.recyclerExploreGrid.visibility = View.VISIBLE
         binding.recyclerUserResults.visibility = View.GONE
@@ -88,8 +96,101 @@ class SearchFragment : Fragment() {
 
     private fun showResultsView() {
         binding.recyclerExploreGrid.visibility = View.GONE
+        binding.textExploreEmpty.visibility = View.GONE
         binding.recyclerUserResults.visibility = View.VISIBLE
     }
+
+    // --- Explore feed: all notes from public accounts ---
+
+    private fun loadExploreFeed() {
+        if (exploreLoaded) return
+        exploreLoaded = true
+
+        val currentUid = FirebaseAuth.getInstance().currentUser?.uid
+
+        FirebaseUtil.database.getReference("notes")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (_binding == null) return
+
+                    val notes = snapshot.children
+                        .mapNotNull { it.getValue(Note::class.java) }
+                        .filter { !it.anonymous }
+                        .sortedByDescending { it.createdAt }
+
+                    if (notes.isEmpty()) {
+                        binding.textExploreEmpty.visibility = View.VISIBLE
+                        return
+                    }
+
+                    resolvePublicNotes(notes, currentUid)
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
+    }
+
+    private fun resolvePublicNotes(notes: List<Note>, currentUid: String?) {
+        val authorUids = notes.map { it.authorUid }.distinct()
+        val privacyMap = mutableMapOf<String, Boolean>()
+        val usernameMap = mutableMapOf<String, String>()
+        val avatarMap = mutableMapOf<String, String?>()
+        var remaining = authorUids.size
+
+        if (remaining == 0) {
+            binding.textExploreEmpty.visibility = View.VISIBLE
+            return
+        }
+
+        authorUids.forEach { uid ->
+            FirebaseUtil.database.getReference("users").child(uid)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        privacyMap[uid] = snapshot.child("isPrivate").getValue(Boolean::class.java) ?: false
+                        usernameMap[uid] = snapshot.child("username").getValue(String::class.java).orEmpty()
+                        avatarMap[uid] = snapshot.child("avatarBase64").getValue(String::class.java)
+
+                        remaining--
+                        if (remaining == 0 && _binding != null) {
+                            finishBuildingFeed(notes, privacyMap, usernameMap, avatarMap)
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        remaining--
+                        if (remaining == 0 && _binding != null) {
+                            finishBuildingFeed(notes, privacyMap, usernameMap, avatarMap)
+                        }
+                    }
+                })
+        }
+    }
+
+    private fun finishBuildingFeed(
+        notes: List<Note>,
+        privacyMap: Map<String, Boolean>,
+        usernameMap: Map<String, String>,
+        avatarMap: Map<String, String?>
+    ) {
+        val publicNotes = notes
+            .filter { privacyMap[it.authorUid] == false } // only accounts explicitly not private
+            .map {
+                FeedNote(
+                    note = it,
+                    authorUsername = usernameMap[it.authorUid].orEmpty(),
+                    authorAvatarBase64 = avatarMap[it.authorUid]
+                )
+            }
+
+        if (publicNotes.isEmpty()) {
+            binding.textExploreEmpty.visibility = View.VISIBLE
+        } else {
+            binding.textExploreEmpty.visibility = View.GONE
+            feedAdapter.submitList(publicNotes)
+        }
+    }
+
+    // --- User search (unchanged from before) ---
 
     private fun performSearch(query: String) {
         val currentUid = FirebaseAuth.getInstance().currentUser?.uid ?: return
@@ -106,7 +207,7 @@ class SearchFragment : Fragment() {
                     val matches = mutableListOf<UserSearchResult>()
                     for (child in snapshot.children) {
                         val uid = child.child("uid").getValue(String::class.java) ?: continue
-                        if (uid == currentUid) continue // don't show yourself
+                        if (uid == currentUid) continue
 
                         val username = child.child("username").getValue(String::class.java).orEmpty()
                         val displayName = child.child("displayName").getValue(String::class.java).orEmpty()
@@ -137,9 +238,7 @@ class SearchFragment : Fragment() {
                     resolveFollowStates(currentUid, matches)
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    // Silently ignore for now, or show a toast/snackbar later
-                }
+                override fun onCancelled(error: DatabaseError) {}
             })
     }
 

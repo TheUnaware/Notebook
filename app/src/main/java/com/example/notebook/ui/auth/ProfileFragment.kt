@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import androidx.recyclerview.widget.GridLayoutManager
 
 class ProfileFragment : Fragment() {
 
@@ -31,6 +32,7 @@ class ProfileFragment : Fragment() {
     private var currentCoverColor: String? = null
     private var currentAvatarBase64: String? = null
     private var isProfilePrivate = false
+    private lateinit var noteGridAdapter: NoteGridAdapter
 
     // Which profile is being shown, and whether it's the logged-in user's own.
     private var viewedUid: String = ""
@@ -62,6 +64,9 @@ class ProfileFragment : Fragment() {
 
         binding.buttonMore.setOnClickListener { showOptionsMenu() }
         binding.buttonFollow.setOnClickListener { onFollowClicked() }
+        noteGridAdapter = NoteGridAdapter { note -> openNoteDetail(note) }
+        binding.recyclerNotes.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.recyclerNotes.adapter = noteGridAdapter
     }
 
     private fun loadProfile() {
@@ -201,11 +206,54 @@ class ProfileFragment : Fragment() {
 
     private fun showNotesSection(locked: Boolean) {
         if (_binding == null) return
-        binding.textNotesPlaceholder.text = if (locked) {
-            "This profile is private"
-        } else {
-            "No notes uploaded by user"
+
+        if (locked) {
+            binding.textNotesPlaceholder.text = "This profile is private"
+            binding.textNotesPlaceholder.visibility = View.VISIBLE
+            binding.recyclerNotes.visibility = View.GONE
+            return
         }
+
+        loadNotes()
+    }
+
+    private fun loadNotes() {
+        if (viewedUid.isEmpty() || _binding == null) return
+
+        FirebaseUtil.database.getReference("userNotes").child(viewedUid)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (_binding == null) return
+
+                    val notes = snapshot.children.mapNotNull { it.getValue(Note::class.java) }
+                        .sortedByDescending { it.createdAt }
+
+                    if (notes.isEmpty()) {
+                        binding.textNotesPlaceholder.text = "No notes uploaded by user"
+                        binding.textNotesPlaceholder.visibility = View.VISIBLE
+                        binding.recyclerNotes.visibility = View.GONE
+                    } else {
+                        binding.textNotesPlaceholder.visibility = View.GONE
+                        binding.recyclerNotes.visibility = View.VISIBLE
+                        noteGridAdapter.submitList(notes)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    if (_binding == null) return
+                    binding.textNotesPlaceholder.text = "Couldn't load notes"
+                    binding.textNotesPlaceholder.visibility = View.VISIBLE
+                    binding.recyclerNotes.visibility = View.GONE
+                }
+            })
+    }
+
+    private fun openNoteDetail(note: Note) {
+        val bundle = Bundle().apply {
+            putString("noteId", note.id)
+            putString("authorUid", note.authorUid)
+        }
+        findNavController().navigate(R.id.action_profile_to_noteDetail, bundle)
     }
 
     private fun setAvatarFromBase64(base64: String) {
